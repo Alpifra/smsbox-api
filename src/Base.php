@@ -11,6 +11,8 @@ use Alpifra\SmsboxApi\Exception\ResponseCodeException;
 
     public const BASE_URL = 'https://api.smsbox.pro/1.1/api.php';
     public const ALLOWED_MODE = ['Standard', 'Expert', 'Reponse'];
+    public const ALLOWED_ENCODE = ['default', 'unicode', 'auto'];
+    public const ALLOWED_CHARSET = ['iso-8859-1', 'iso-8859-15', 'utf-8'];
     public const ALLOWED_STRATEGY = [1, 2, 3, 4];
     
     /**
@@ -40,7 +42,23 @@ use Alpifra\SmsboxApi\Exception\ResponseCodeException;
      *
      * @var string
      */
-    private $mode;    
+    private $mode;
+
+    /**
+     * Encoding mode for content : default, unicode, auto
+     * More info on http://fr.smsbox.net/docs/doc-API-SMSBOX-1.1-FR.html
+     *
+     * @var string
+     */
+    private $encode;
+
+    /**
+     * Encoding mode for content : iso-8859-1, iso-8859-15, utf-8
+     * More info on http://fr.smsbox.net/docs/doc-API-SMSBOX-1.1-FR.html
+     *
+     * @var string
+     */
+    private $charset;
 
     /**
      * Sending strategy : 1, 2, 3 or 4
@@ -123,7 +141,34 @@ use Alpifra\SmsboxApi\Exception\ResponseCodeException;
 
         $this->mode = $mode;
     }
-    
+    /**
+     * Set the encoding
+     *
+     * @param  string $encode
+     * @return void
+     */
+    public function setEncode(string $encode = 'auto'): void
+    {
+        if (!in_array($encode, self::ALLOWED_ENCODE)) {
+            $this->encode = 'auto';
+        }
+        $this->encode = $encode;
+    }
+
+    /**
+     * Set the charset
+     *
+     * @param  string $charset
+     * @return void
+     */
+    public function setCharset(string $charset = 'iso-8859-1'): void
+    {
+        if (!in_array($charset, self::ALLOWED_CHARSET)) {
+            $this->charset = 'iso-8859-1';
+        }
+        $this->charset = $charset;
+    }
+
     /**
      * Set the sender
      *
