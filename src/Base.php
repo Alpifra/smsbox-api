@@ -194,6 +194,8 @@ use Alpifra\SmsboxApi\Exception\ResponseCodeException;
             'msg'      => $this->message,
             'mode'     => $this->mode,
             'strategy' => $this->strategy,
+            'coding'   => $this->encode,
+            'charset'  => $this->charset
         ];
 
         $ch = curl_init(self::BASE_URL);
